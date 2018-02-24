@@ -32,19 +32,101 @@ screen = Screen(
 	id=0,
 	parent=app,
 	fg_color=RA8875_YELLOW,
-	bg_color=RA8875_BLACK
+	bg_color=RA8875_RED
 	)
 
 pbm = NetPBM()
-pbm.load(P1.pbm)
-
+pbm.load('P1.pbm')
 img = Image(
 	parent=screen,
 	border=0,
+	w=pbm.width(),
+	h=pbm.height(),
 	src=pbm.export(ColorMap.b16)
 	)
+img.center(150)
+img.middle(150)
 
+pbm = NetPBM()
+pbm.load('P2.pgm')
+img = Image(
+	parent=screen,
+	border=0,
+	w=pbm.width(),
+	h=pbm.height(),
+	src=pbm.export(ColorMap.b16)
+	)
 img.center()
-img.middle()
+img.middle(150)
+
+pbm = NetPBM()
+pbm.load('P3.ppm')
+img = Image(
+	parent=screen,
+	border=0,
+	w=pbm.width(),
+	h=pbm.height(),
+	src=pbm.export(ColorMap.b16)
+	)
+img.center(650)
+img.middle(150)
+
+pbm = NetPBM()
+pbm.load('P4.pbm')
+img = Image(
+	parent=screen,
+	border=0,
+	w=pbm.width(),
+	h=pbm.height(),
+	src=pbm.export(ColorMap.b16)
+	)
+img.center(150)
+img.middle(350)
+
+pbm = NetPBM()
+pbm.load('P5.pgm')
+img = Image(
+	parent=screen,
+	border=0,
+	w=pbm.width(),
+	h=pbm.height(),
+	src=pbm.export(ColorMap.b16)
+	)
+img.center()
+img.middle(350)
+
+pbm = NetPBM()
+pbm.load('P6.ppm')
+img = Image(
+	parent=screen,
+	border=0,
+	w=pbm.width(),
+	h=pbm.height(),
+	src=pbm.export(ColorMap.b16)
+	)
+img.center(650)
+img.middle(350)
+
+# grid = Grid(
+# 	parent=screen,
+# 	rows=2,
+# 	cols=3,
+# 	h=tft.height(),
+# 	w=tft.width()
+# 	)
+
+# for imgfile in ['P1.pbm','P2.pgm','P3.ppm','P4.pbm','P5.pgm','P6.ppm']:
+# 	pbm = NetPBM()
+# 	pbm.load(imgfile)
+
+# 	img = Image(
+# 		parent=grid,
+# 		border=0,
+# 		w=pbm.width(),
+# 		h=pbm.height(),
+# 		src=pbm.export(ColorMap.b16)
+# 		)
+
+# grid.position()
 
 screen.active(True)

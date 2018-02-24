@@ -1,8 +1,8 @@
-import sys
-sys.path.append('../../Python_Adafruit_RA8875/adafruit_ra8875')
-from Adafruit_RA8875_h import *
-# import CHIP_IO.GPIO as GPIO
-# from adafruit_ra8875 import *
+# import sys
+# sys.path.append('../../Python_Adafruit_RA8875/adafruit_ra8875')
+# from Adafruit_RA8875_h import *
+import CHIP_IO.GPIO as GPIO
+from adafruit_ra8875 import *
 import enum
 
 # class t_screen(enum.Enum):
