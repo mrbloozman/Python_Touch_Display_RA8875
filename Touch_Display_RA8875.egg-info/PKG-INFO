@@ -1,0 +1,12 @@
+Metadata-Version: 1.2
+Name: Touch-Display-RA8875
+Version: 0.1.1
+Summary: Application framework including input controls, touch event handling, etc, to assist in running RA8875 via spi on NTC CHIP
+Home-page: UNKNOWN
+Author: Mark Schwartz
+Author-email: mrbloozman@gmail.com
+License: MIT
+Project-URL: Source Code, https://www.github.com/mrbloozman/Python_Touch_Display_RA8875
+Description-Content-Type: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN

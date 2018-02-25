@@ -1,6 +1,7 @@
-import sys
-sys.path.append('../touch_display_ra8875')
-from __init__ import *
+# import sys
+# sys.path.append('../touch_display_ra8875')
+# from __init__ import *
+from touch_display_ra8875 import *
 
 td = TouchDisplay(
 	# required args

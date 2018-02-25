@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 setup(
     name="Touch_Display_RA8875",
-    version="0.1",
+    version="0.1.1",
     packages=['touch_display_ra8875'],
     # scripts=['say_hello.py'],
 
