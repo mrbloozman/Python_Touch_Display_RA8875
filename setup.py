@@ -1,13 +1,13 @@
 from setuptools import setup, find_packages
 setup(
     name="Touch_Display_RA8875",
-    version="0.1.1",
+    version="0.1.2",
     packages=['touch_display_ra8875'],
     # scripts=['say_hello.py'],
 
     # Project uses reStructuredText, so ensure that the docutils get
     # installed or upgraded on the target machine
-    install_requires=['adafruit_ra8875_sim>=0.1'],
+    install_requires=['adafruit_ra8875>=0.1'],
 
     package_data={
         # If any package contains *.txt or *.rst files, include them:

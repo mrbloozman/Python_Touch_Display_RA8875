@@ -16,8 +16,11 @@ RA8875_RESET = 'XIO-P3'
 tft = Adafruit_RA8875(RA8875_CS, RA8875_RESET)
 
 if not tft.begin(RA8875sizes.RA8875_800x480):
-	print "RA8875 Not Found!"
-	raise
+	try:
+		raise Exception("RA8875 Not Found!")
+	except Exception as e:
+		print(e)
+
 
 tft.displayOn(True)
 tft.GPIOX(True)      # Enable TFT - display enable tied to GPIOX

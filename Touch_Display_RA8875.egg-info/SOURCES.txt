@@ -1,7 +1,0 @@
-setup.py
-Touch_Display_RA8875.egg-info/PKG-INFO
-Touch_Display_RA8875.egg-info/SOURCES.txt
-Touch_Display_RA8875.egg-info/dependency_links.txt
-Touch_Display_RA8875.egg-info/requires.txt
-Touch_Display_RA8875.egg-info/top_level.txt
-touch_display_ra8875/__init__.py
