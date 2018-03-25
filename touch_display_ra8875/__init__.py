@@ -1,8 +1,8 @@
 # import sys
 # sys.path.append('../../Python_Adafruit_RA8875/adafruit_ra8875')
-# from Adafruit_RA8875_h import *
-import CHIP_IO.GPIO as GPIO
-from adafruit_ra8875 import *
+from adafruit_ra8875_sim.Adafruit_RA8875_h import *
+# import CHIP_IO.GPIO as GPIO
+from adafruit_ra8875_sim import *
 import enum
 
 # class t_screen(enum.Enum):
@@ -771,9 +771,9 @@ class Image(Control):
 			mem.append(px)
 
 		for i in xrange(0,len(mem),4095):
-			GPIO.output(self._tft._cs, GPIO.LOW)
+			# GPIO.output(self._tft._cs, GPIO.LOW)
 			self._tft.spi.xfer2([RA8875_DATAWRITE]+mem[i:i+4095])
-			GPIO.output(self._tft._cs, GPIO.HIGH)
+			# GPIO.output(self._tft._cs, GPIO.HIGH)
 
 		# Set active window X 
 		self._tft.writeReg(RA8875_HSAW0, 0)                                        # horizontal start point
@@ -906,12 +906,12 @@ class TouchDisplay:
 		while True:
 			try:
 				if handleInterrupt:
-					if GPIO.input(self._intPin)==0:
-						self.handleInterrupt()
+					# if GPIO.input(self._intPin)==0:
+					self.handleInterrupt()
 				if handleUpdate:
 					self.handleUpdate()
 
 			except KeyboardInterrupt:
 				self._tft.displayOn(False)
-				GPIO.cleanup()
+				# GPIO.cleanup()
 				raise

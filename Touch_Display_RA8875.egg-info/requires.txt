@@ -1,3 +1,1 @@
-adafruit_RA8875>=0.1
-CHIP_IO>=0.7.1
-enum
+adafruit_ra8875_sim>=0.1

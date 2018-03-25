@@ -7,7 +7,7 @@ setup(
 
     # Project uses reStructuredText, so ensure that the docutils get
     # installed or upgraded on the target machine
-    install_requires=['adafruit_RA8875>=0.1','CHIP_IO>=0.7.1','enum'],
+    install_requires=['adafruit_ra8875_sim>=0.1'],
 
     package_data={
         # If any package contains *.txt or *.rst files, include them:
