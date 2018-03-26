@@ -1,10 +1,10 @@
-from touch_display_ra8875 import *
-from adafruit_ra8875 import *
+from touch_display_ra8875_sim import *
+from adafruit_ra8875_sim import *
 from netpbm import *
-import CHIP_IO.GPIO as GPIO
-import CHIP_IO.OverlayManager as OM
+# import CHIP_IO.GPIO as GPIO
+# import CHIP_IO.OverlayManager as OM
 
-OM.load('SPI2')
+# OM.load('SPI2')
 
 RA8875_INT = 'XIO-P1'
 RA8875_CS = 'XIO-P2'
@@ -25,7 +25,7 @@ tft.PWM1config(True, RA8875_PWM_CLK_DIV1024) # PWM output for backlight
 tft.PWM1out(255)
 tft.touchEnable(True)
 
-GPIO.setup(RA8875_INT, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+# GPIO.setup(RA8875_INT, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 app = TouchDisplay(intPin=RA8875_INT,tft=tft)
 
@@ -130,4 +130,5 @@ img.middle(350)
 
 # grid.position()
 
-screen.active(True)
+app.status(screen=0)
+app.run(handleInterrupt=True,handleUpdate=True)
