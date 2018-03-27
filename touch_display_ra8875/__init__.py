@@ -463,7 +463,7 @@ class Button(Input):
 		self._tft.textMode()
 		self._tft.textColor(self.fg_color(),bg_color)
 		# setting for center/middle of rect
-		self._tft.textSetCursor(self._x+int(self._w/2)-int(self.value_width()/2),self._y+int(self._h/2)-int(self.value_height()/2))
+		self._tft.textSetCursor(self._x+int(self._w/2)-int(self.text_width()/2),self._y+int(self._h/2)-int(self.text_height()/2))
 		self._tft.textEnlarge(self._size)
 		self._tft.textWrite(str(self._text),0)
 		self._tft.graphicsMode()
@@ -883,6 +883,11 @@ class TouchDisplay:
 			if s.id() == id:
 				return s
 		return False
+
+	def setScreen(self,id):
+		s = self.getScreen(id)
+		s.active(True)
+		self.status(screen=id)
 
 	def handleInterrupt(self):
 		while self._tft.touched():

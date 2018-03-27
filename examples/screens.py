@@ -35,32 +35,65 @@ screen0 = Screen(
 	id=0,
 	parent=td,
 	# options
-	fg_color=0xFFFF,
-	bg_color=0x0000
+	fg_color=RA8875_YELLOW,
+	bg_color=RA8875_BLACK
 	)
+
+screen1 = Screen(
+	id=1,
+	parent=td,
+	fg_color=RA8875_WHITE,
+	bg_color=RA8875_RED
+)
+
 
 label0 = Label(
 	parent=screen0,
 	size=2,
-	text='Test Label0',
-	border=1
+	text='Screen0'
 )
 
 label0.center()
 label0.middle()
 
-print(vars(label0))
+btn0 = Button(
+	parent=screen0,
+	size=1,
+	padding=20,
+	text='Goto Screen1',
+	onTap=screen1.active,
+	onTapArgs=[True]
+)
 
-screen1 = Screen(
-	id=1,
-	parent=td
-	)
+btn0.center()
+btn0.middle(350)
 
-screen2 = Screen(
-	id=2,
-	parent=td
-	)
 
-td.status(screen=0)
+
+
+label1 = Label(
+	parent=screen1,
+	size=2,
+	text='Screen1'
+)
+
+label1.center()
+label1.middle()
+
+btn1 = Button(
+	parent=screen1,
+	size=1,
+	padding=20,
+	text='Goto Screen0',
+	onTap=screen0.active,
+	onTapArgs=[True]
+)
+
+btn1.center()
+btn1.middle(350)
+
+
+
+td.setScreen(0)
 td.run(handleInterrupt=True,handleUpdate=True)
 
