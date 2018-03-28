@@ -4,6 +4,13 @@
 # from touch_display_ra8875 import *
 from touch_display_ra8875_sim import *
 
+# Debug
+def debug(obj):
+	for k in vars(obj):
+		v = vars(obj)[k]
+		print(k+': '+str(v))
+
+# Setup RA8875
 RA8875_INT = 'XIO-P1'
 RA8875_CS = 'XIO-P2'
 RA8875_RESET = 'XIO-P3'
@@ -20,16 +27,18 @@ if not tft.begin(RA8875sizes.RA8875_800x480):
 print("Found RA8875")
 
 tft.displayOn(True)
-tft.GPIOX(True)      # Enable TFT - display enable tied to GPIOX
-tft.PWM1config(True, RA8875_PWM_CLK_DIV1024) # PWM output for backlight
+tft.GPIOX(True)  # Enable TFT - display enable tied to GPIOX
+tft.PWM1config(True, RA8875_PWM_CLK_DIV1024)  # PWM output for backlight
 tft.PWM1out(255)
 
+# Touch Display
 td = TouchDisplay(
 	# required args
 	intPin='XIO-P#',
 	tft=tft
-	)
+)
 
+# Define Screens
 screen0 = Screen(
 	# required args
 	id=0,
@@ -37,7 +46,7 @@ screen0 = Screen(
 	# options
 	fg_color=RA8875_YELLOW,
 	bg_color=RA8875_BLACK
-	)
+)
 
 screen1 = Screen(
 	id=1,
@@ -46,15 +55,20 @@ screen1 = Screen(
 	bg_color=RA8875_RED
 )
 
+screen2 = Screen(
+	id=2,
+	parent=td,
+	fg_color=RA8875_YELLOW,
+	bg_color=RA8875_BLUE
+)
+
+# Define screen0 controls
 
 label0 = Label(
 	parent=screen0,
 	size=2,
 	text='Screen0'
 )
-
-label0.center()
-label0.middle()
 
 btn0 = Button(
 	parent=screen0,
@@ -65,20 +79,62 @@ btn0 = Button(
 	onTapArgs=[True]
 )
 
+# Then position the screen0 controls
+label0.center()
+label0.middle()
+
 btn0.center()
 btn0.middle(350)
 
-
-
-
+# Define screen1 controls
 label1 = Label(
 	parent=screen1,
 	size=2,
 	text='Screen1'
 )
 
-label1.center()
-label1.middle()
+grid1 = Grid(
+	parent=screen1,
+	border=2,
+	w=750,
+	h=300,
+	rows=2,
+	cols=3
+)
+
+label1a = Label(
+	parent=grid1,
+	size=1,
+	text='Label 1a'
+)
+
+label1b = Label(
+	parent=grid1,
+	size=1,
+	text='Label 1b'
+)
+label1c = Label(
+	parent=grid1,
+	size=1,
+	text='Label 1c'
+)
+label1d = Label(
+	parent=grid1,
+	size=1,
+	text='Label 1d'
+)
+label1e = Label(
+	parent=grid1,
+	size=1,
+	text='Label 1e'
+)
+btn1f = Button(
+	parent=grid1,
+	size=1,
+	text='Goto Screen 2',
+	onTap=screen2.active,
+	onTapArgs=[True]
+)
 
 btn1 = Button(
 	parent=screen1,
@@ -89,11 +145,74 @@ btn1 = Button(
 	onTapArgs=[True]
 )
 
+# Then position the screen1 controls
+label1.center()
+label1.top()
+
+grid1.center()
+grid1.middle()
+
 btn1.center()
-btn1.middle(350)
+btn1.bottom()
 
+# Define screen2 controls
+label2 = Label(
+	parent=screen2,
+	size=2,
+	text='Screen 2'
+)
 
+lbl_input2 = Label(
+	parent=screen2,
+	size=1,
+	text='Input Control: '
+)
 
+input2 = Input(
+	parent=screen2,
+	size=1,
+	datatype=t_datatype.text,
+	value='Black when disabled',
+	enabled=False
+)
+
+toggle2 = Toggle(
+	parent=screen2,
+	size=1,
+	text='Input Enabled Toggle',
+	onSelect=input2.enabled,
+	onSelectArgs=['_selected']
+)
+
+# position screen2
+label2.center()
+label2.top()
+
+lbl_input2.middle()
+lbl_input2.right(400)
+
+input2.middle()
+input2.left(400)
+
+toggle2.center()
+toggle2.bottom()
+
+# put a control on all screens except screen0
+btn_exit = Button(
+	parent=screen1,
+	size=1,
+	text='EXIT',
+	onTap=screen0.active,
+	onTapArgs=[True]
+)
+
+btn_exit.top()
+btn_exit.right()
+
+for s in td.screens():
+	if s.id() != 0:
+		s.addControl(btn_exit)
+
+# Set the starting screen id, then run the touch display
 td.setScreen(0)
-td.run(handleInterrupt=True,handleUpdate=True)
-
+td.run(handleInterrupt=True, handleUpdate=True)

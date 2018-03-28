@@ -2,15 +2,6 @@
 from adafruit_ra8875_sim import *
 import enum
 
-# class t_screen(enum.Enum):
-# 	main = 0
-# 	menu = 1
-# 	buttons = 2
-# 	toggles = 3
-# 	listbox = 4
-# 	spinbox = 5
-# 	image = 6
-
 class t_datatype(enum.Enum):
 	text = 0
 	number = 1
@@ -89,8 +80,10 @@ class Control:
 
 		if 'border' in kwargs:
 			self._border = int(kwargs['border'])
+		elif '_border' in vars(self._parent):
+			self._border = self._parent.border()
 		else:
-			self._border = 1
+			self._border = 0
 
 		if 'padding' in kwargs:
 			self.padding(int(kwargs['padding']))
@@ -266,8 +259,6 @@ class Control:
 class Label(Control):
 	def __init__(self,**kwargs):
 		Control.__init__(self,**kwargs)
-		if 'border' not in kwargs:
-			self.border(0)
 
 class Grid(Control):
 	def __init__(self,**kwargs):
@@ -416,6 +407,19 @@ class Input(Control):
 	def value_height(self):
 		return 16*(1+self._size)
 
+	def padding(self,p):
+		if p:
+			self._padding = int(p)
+		elif p==0:
+			self._padding = 0
+		minw = (self._border*2)+(self._padding*2)+self.value_width()
+		minh = (self._border*2)+(self._padding*2)+self.value_height()
+		if self._w < minw:
+			self._w = minw
+		if self._h < minh:
+			self._h = minh
+		return self._padding
+
 	def change(self,val):
 		if self._value != val:
 			self.value(val)
@@ -450,6 +454,26 @@ class Input(Control):
 class Button(Input):
 	def __init__(self,**kwargs):
 		Input.__init__(self,**kwargs)
+
+		if 'border' in kwargs:
+			self._border = int(kwargs['border'])
+		elif '_border' in vars(self._parent):
+			self._border = self._parent.border()
+		else:
+			self._border = 1
+
+	def padding(self,p):
+		if p:
+			self._padding = int(p)
+		elif p==0:
+			self._padding = 0
+		minw = (self._border*2)+(self._padding*2)+self.text_width()
+		minh = (self._border*2)+(self._padding*2)+self.text_height()
+		if self._w < minw:
+			self._w = minw
+		if self._h < minh:
+			self._h = minh
+		return self._padding
 		
 	def render(self):
 		if self._enabled:
@@ -834,7 +858,8 @@ class Screen:
 		return self._bg_color
 
 	def addControl(self,c):
-		self._controls.append(c)
+		if c not in self._controls:
+			self._controls.append(c)
 
 	def controls(self,controls=None):
 		if controls:
