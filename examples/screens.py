@@ -62,6 +62,20 @@ screen2 = Screen(
 	bg_color=RA8875_BLUE
 )
 
+screen3 = Screen(
+	id=3,
+	parent=td,
+	fg_color=0x8090,
+	bg_color=0xFFFF
+)
+
+screen4 = Screen(
+	id=4,
+	parent=td,
+	fg_color=0xFFFF,
+	bg_color=0x0000
+)
+
 # Define screen0 controls
 
 label0 = Label(
@@ -102,22 +116,30 @@ grid1 = Grid(
 	cols=3
 )
 
-label1a = Label(
+btn1a = Button(
 	parent=grid1,
 	size=1,
-	text='Label 1a'
+	text='Toggle Enable',
+	onTap=screen2.active,
+	onTapArgs=[True]
 )
 
-label1b = Label(
+btn1b = Button(
 	parent=grid1,
 	size=1,
-	text='Label 1b'
+	text='Spinbox',
+	onTap=screen3.active,
+	onTapArgs=[True]
 )
-label1c = Label(
+
+btn1c = Button(
 	parent=grid1,
 	size=1,
-	text='Label 1c'
+	text='Listbox',
+	onTap=screen4.active,
+	onTapArgs=[True]
 )
+
 label1d = Label(
 	parent=grid1,
 	size=1,
@@ -128,12 +150,10 @@ label1e = Label(
 	size=1,
 	text='Label 1e'
 )
-btn1f = Button(
+label1f = Label(
 	parent=grid1,
 	size=1,
-	text='Goto Screen 2',
-	onTap=screen2.active,
-	onTapArgs=[True]
+	text='Label 1f'
 )
 
 btn1 = Button(
@@ -196,6 +216,88 @@ input2.left(400)
 
 toggle2.center()
 toggle2.bottom()
+
+# screen3 controls
+label3 = Label(
+	parent=screen3,
+	size=1,
+	text='Screen 3'
+)
+
+sbox3 = Spinbox(
+	parent=screen3,
+	size=3,
+	border=2,
+	text='Spin: ',
+	value=5,
+	mn=0,
+	mx=10
+)
+
+label3.left()
+label3.top()
+
+sbox3.middle()
+sbox3.center()
+
+# screen4 controls
+lbl4 = Label(
+	parent=screen4,
+	text='Screen 4',
+	size=1
+)
+
+lbl_lbox4 = Label(
+	parent=screen4,
+	text='Select BG Color: ',
+	size=1
+)
+
+lbox4 = Listbox(
+	parent=screen4,
+	rows=3,
+	value=0,
+	w=400,
+	h=300,
+	onChange=screen4.bg_color,
+	onChangeArgs=['_value'],
+	onTap=screen4.active,
+	onTapArgs=[True]
+)
+
+item1 = ListboxItem(
+	parent=lbox4,
+	size=1,
+	text='Red',
+	value=RA8875_RED
+)
+
+item2 = ListboxItem(
+	parent=lbox4,
+	size=1,
+	text='Green',
+	value=RA8875_GREEN
+)
+
+item3 = ListboxItem(
+	parent=lbox4,
+	size=1,
+	text='Blue',
+	value=RA8875_BLUE
+)
+
+lbl4.center()
+lbl4.top()
+
+lbl_lbox4.middle()
+lbl_lbox4.center(250)
+
+lbox4.middle()
+lbox4.center(650)
+
+
+
+
 
 # put a control on all screens except screen0
 btn_exit = Button(
