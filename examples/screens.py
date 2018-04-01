@@ -3,6 +3,7 @@
 # from __init__ import *
 # from touch_display_ra8875 import *
 from touch_display_ra8875_sim import *
+import netpbm
 
 # Debug
 def debug(obj):
@@ -84,6 +85,17 @@ label0 = Label(
 	text='Screen0'
 )
 
+img = netpbm.NetPBM()
+img.load('Bear.ppm')
+
+img0 = Image(
+	parent=screen0,
+	w=img.width(),
+	h=img.height(),
+	transparent=True,
+	src=img.export(netpbm.ColorMap.b16)
+)
+
 btn0 = Button(
 	parent=screen0,
 	size=1,
@@ -94,8 +106,11 @@ btn0 = Button(
 )
 
 # Then position the screen0 controls
-label0.center()
+label0.left(50)
 label0.middle()
+
+img0.right(750)
+img0.middle()
 
 btn0.center()
 btn0.middle(350)

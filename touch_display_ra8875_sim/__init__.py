@@ -775,60 +775,19 @@ class Image(Control):
 		self._tft.fillRect(self._x, self._y, self._w, self._h, self.bg_color())
 		for b in range(self._border):
 			self._tft.drawRect(self._x + b, self._y + b, self._w - (2 * b), self._h - (2 * b), self.fg_color())
-		for r in range(self._h):
-			line = []
-			self._tft.setXY(self._x, self._y + r)
-			self._tft.writeCommand(RA8875_MRWC)
-			for c in range(self._w):
-				px = self._src[(r * self._w) + c]
-				if px == 0xFFFF:
-					px = self.bg_color()
-				line.append((px >> 8))
-				line.append(px)
-				self._tft.drawPixel(self._x + c, self._y + r, px)
 
-		# 	GPIO.output(self._tft._cs, GPIO.LOW)
-		# 	self._tft.spi.xfer2([RA8875_DATAWRITE]+line)
-		# 	GPIO.output(self._tft._cs, GPIO.HIGH)
 
-		# Set active window X 
-		self._tft.writeReg(RA8875_HSAW0, (self._x & 0xFF))  # horizontal start point
-		self._tft.writeReg(RA8875_HSAW1, (self._x >> 8))
-		self._tft.writeReg(RA8875_HEAW0, (self._x + self._w - 1) & 0xFF)  # horizontal end point
-		self._tft.writeReg(RA8875_HEAW1, (self._x + self._w - 1) >> 8)
 
-		# Set active window Y 
-		self._tft.writeReg(RA8875_VSAW0, (self._y & 0xFF))  # vertical start point
-		self._tft.writeReg(RA8875_VSAW1, (self._y >> 8))
-		self._tft.writeReg(RA8875_VEAW0, (self._y + self._h - 1) & 0xFF)  # horizontal end point
-		self._tft.writeReg(RA8875_VEAW1, (self._y + self._h - 1) >> 8)
-
-		self._tft.setXY(self._x, self._y)
-		self._tft.writeCommand(RA8875_MRWC)
-
-		mem = []
+		mem = bytearray()
 		for px in self._src:
 			if self._transparent and (px == 0xFFFF):
 				px = self.bg_color()
-			mem.append((px >> 8))
-			mem.append(px)
-
-		# for i in range(0,len(mem),4095):
-		# 	GPIO.output(self._tft._cs, GPIO.LOW)
-		# 	self._tft.spi.xfer2([RA8875_DATAWRITE]+mem[i:i+4095])
-		# 	GPIO.output(self._tft._cs, GPIO.HIGH)
-
-		# Set active window X 
-		self._tft.writeReg(RA8875_HSAW0, 0)  # horizontal start point
-		self._tft.writeReg(RA8875_HSAW1, 0)
-		self._tft.writeReg(RA8875_HEAW0, (self._tft.width() - 1) & 0xFF)  # horizontal end point
-		self._tft.writeReg(RA8875_HEAW1, (self._tft.width() - 1) >> 8)
-
-		# Set active window Y 
-		self._tft.writeReg(RA8875_VSAW0, 0)  # vertical start point
-		self._tft.writeReg(RA8875_VSAW1, 0)
-		self._tft.writeReg(RA8875_VEAW0, (self._tft.height() - 1) & 0xFF)  # horizontal end point
-		self._tft.writeReg(RA8875_VEAW1, (self._tft.height() - 1) >> 8)
+			r = (px & 0b1111100000000000) >> 8
+			g = (px & 0b11111100000) >> 3
+			b = (px & 0b11111) << 3
+			mem.extend([r,g,b])
+		img_surface = pygame.image.fromstring(bytes(mem), (self._w, self._h), 'RGB')
+		self._tft._screen.blit(img_surface, (self._x, self._y))
 
 		self._onRender(*self.listArgs(*self._onRenderArgs))
 
